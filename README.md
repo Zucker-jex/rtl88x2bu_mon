@@ -1,11 +1,11 @@
 # Description
 
-Enable monitor mode from original rtl88x2bu driver. 
+Enable monitor mode from original rtl88x2bu driver.
 
 # DKMS installation
 
 ```bash
-apt install bc
+sudo apt-get install bc dkms
 cd rtl88x2bu
 VER=$(sed -n 's/\PACKAGE_VERSION="\(.*\)"/\1/p' dkms.conf)
 sudo rsync -rvhP ./ /usr/src/rtl88x2bu-${VER}
@@ -21,7 +21,7 @@ sudo modprobe 88x2bu
 sudo ip link set wlan0 down
 sudo iwconfig wlan0 mode monitor
 sudo ip link set wlan0 up
-````
+```
 
 # Confirm Monitor Mode
 
@@ -29,8 +29,8 @@ sudo ip link set wlan0 up
 sudo iwconfig wlan0
 
 wlan0     unassociated  Nickname:"<WIFI@REALTEK>"
-          Mode:Monitor  Frequency=2.462 GHz  Access Point: Not-Associated   
-          Sensitivity:0/0  
+          Mode:Monitor  Frequency=2.462 GHz  Access Point: Not-Associated
+          Sensitivity:0/0
           Retry:off   RTS thr:off   Fragment thr:off
           Encryption key:off
           Power Management:off
@@ -225,4 +225,4 @@ Wiphy phy2
         interface combinations are not supported
         Device supports scan flush.
         Supported extended features:
-````
+```

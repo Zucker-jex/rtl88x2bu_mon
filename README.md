@@ -1,12 +1,3 @@
-copy from https://github.com/cilynx/rtl88x2bu
-
-# Description
-
-Enable monitor mode from original rtl88x2bu driver. 
-
-Recommend https://github.com/alunko/rtw88-usb_kalilinux driver for monitor mode.
-It seems, rtl88x2bu driver has problem in capturing 80MHz data frames.
-
 # DKMS installation
 
 ```bash
@@ -19,10 +10,6 @@ sudo dkms build -m rtl88x2bu -v ${VER}
 sudo dkms install -m rtl88x2bu -v ${VER}
 sudo modprobe 88x2bu
 ```
-
-# Support Devices
-
-* TP-Link Archer T4U v3
 
 # Enable Monitor Mode
 

@@ -100,7 +100,7 @@ void rtw_btcoex_ScanNotify(PADAPTER padapter, u8 type)
 	hal_btcoex_ScanNotify(padapter, type);
 }
 
-static void _rtw_btcoex_connect_notify(PADAPTER padapter, u8 action)
+void rtw_btcoex_ConnectNotify(PADAPTER padapter, u8 action)
 {
 	PHAL_DATA_TYPE	pHalData;
 
@@ -345,21 +345,6 @@ u32 rtw_btcoex_GetRaMask(PADAPTER padapter)
 	return hal_btcoex_GetRaMask(padapter);
 }
 
-u8 rtw_btcoex_query_reduced_wl_pwr_lvl(PADAPTER padapter)
-{
-	return hal_btcoex_query_reduced_wl_pwr_lvl(padapter);
-}
-
-void rtw_btcoex_set_reduced_wl_pwr_lvl(PADAPTER padapter, u8 val)
-{
-	hal_btcoex_set_reduced_wl_pwr_lvl(padapter, val);
-}
-
-void rtw_btcoex_do_reduce_wl_pwr_lvl(PADAPTER padapter)
-{
-	hal_btcoex_do_reduce_wl_pwr_lvl(padapter);
-}
-
 void rtw_btcoex_RecordPwrMode(PADAPTER padapter, u8 *pCmdBuf, u8 cmdLen)
 {
 	hal_btcoex_RecordPwrMode(padapter, pCmdBuf, cmdLen);
@@ -468,16 +453,6 @@ u16 rtw_btcoex_btreg_write(PADAPTER padapter, u8 type, u16 addr, u16 val)
 	return hal_btcoex_btreg_write(padapter, type, addr, val);
 }
 
-u16 rtw_btcoex_btset_testmode(PADAPTER padapter, u8 type)
-{
-	return hal_btcoex_btset_testode(padapter, type);
-}
-
-u8 rtw_btcoex_get_reduce_wl_txpwr(PADAPTER padapter)
-{
-	return rtw_btcoex_query_reduced_wl_pwr_lvl(padapter);
-}
-
 u8 rtw_btcoex_get_bt_coexist(PADAPTER padapter)
 {
 	HAL_DATA_TYPE	*pHalData = GET_HAL_DATA(padapter);
@@ -515,9 +490,9 @@ u8 rtw_btcoex_get_pg_rfe_type(PADAPTER padapter)
 
 u8 rtw_btcoex_is_tfbga_package_type(PADAPTER padapter)
 {
-#ifdef CONFIG_RTL8723B
 	HAL_DATA_TYPE	*pHalData = GET_HAL_DATA(padapter);
 
+#ifdef CONFIG_RTL8723B
 	if ((pHalData->PackageType == PACKAGE_TFBGA79) || (pHalData->PackageType == PACKAGE_TFBGA80)
 	    || (pHalData->PackageType == PACKAGE_TFBGA90))
 		return _TRUE;
@@ -890,7 +865,7 @@ u8 rtw_btcoex_parse_HCI_link_status_notify_cmd(_adapter *padapter, u8 *pcmd, u16
 			RTW_INFO("Connection_Handle=0x%x, BTProfile=%d, BTSpec=%d\n", conHandle, btProfile, btCoreSpec);
 			pTriple += 4;
 		} else if (pBtMgnt->ExtConfig.HCIExtensionVer >= 1) {
-			conHandle = *((u16 *)&pTriple[0]);
+			conHandle = *((pu2Byte)&pTriple[0]);
 			btProfile = pTriple[2];
 			btCoreSpec = pTriple[3];
 			linkRole = pTriple[4];
@@ -1468,9 +1443,7 @@ u8 rtw_btcoex_sendmsgbysocket(_adapter *padapter, u8 *msg, u8 msg_size, bool for
 {
 	u8 error;
 	struct msghdr	udpmsg;
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 10, 0))
 	mm_segment_t	oldfs;
-#endif
 	struct iovec	iov;
 	struct bt_coex_info *pcoex_info = &padapter->coex_info;
 
@@ -1657,7 +1630,7 @@ void rtw_btcoex_SendEventExtBtCoexControl(PADAPTER padapter, u8 bNeedDbgRsp, u8 
 	u8 			localBuf[32] = "";
 	u8			*pRetPar;
 	u8			opCode = 0;
-	u8			*pInBuf = (u8 *)pData;
+	u8			*pInBuf = (pu1Byte)pData;
 	u8			*pOpCodeContent;
 	rtw_HCI_event *pEvent;
 
@@ -1789,19 +1762,5 @@ void rtw_btcoex_set_ant_info(PADAPTER padapter)
 	else
 #endif
 		rtw_btcoex_wifionly_AntInfoSetting(padapter);
-}
-
-void rtw_btcoex_connect_notify(PADAPTER padapter, u8 join_type)
-{
-#ifdef CONFIG_BT_COEXIST
-	PHAL_DATA_TYPE	pHalData;
-
-	pHalData = GET_HAL_DATA(padapter);
-
-	if (pHalData->EEPROMBluetoothCoexist == _TRUE)
-		_rtw_btcoex_connect_notify(padapter, join_type ? _FALSE : _TRUE);
-	else
-#endif /* CONFIG_BT_COEXIST */
-	rtw_btcoex_wifionly_connect_notify(padapter);
 }
 

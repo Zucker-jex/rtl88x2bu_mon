@@ -20,7 +20,7 @@
 *                           MSDIO.TXT
 ******************************************************************************/
 
-u8 Array_MP_8822B_MSDIO[] = {
+u1Byte Array_MP_8822B_MSDIO[] = {
 0xFF,
 0xF7,
 0xEF,
@@ -72,20 +72,20 @@ u8 Array_MP_8822B_MSDIO[] = {
 
 };
 
-u16 EFUSE_GetArrayLen_MP_8822B_MSDIO(void)
+u2Byte EFUSE_GetArrayLen_MP_8822B_MSDIO(VOID)
 {
-	return sizeof(Array_MP_8822B_MSDIO) / sizeof(u8);
+	return sizeof(Array_MP_8822B_MSDIO) / sizeof(u1Byte);
 }
 
-void EFUSE_GetMaskArray_MP_8822B_MSDIO(u8 *Array)
+VOID EFUSE_GetMaskArray_MP_8822B_MSDIO(pu1Byte Array)
 {
-	u16 len = EFUSE_GetArrayLen_MP_8822B_MSDIO(), i = 0;
+	u2Byte len = EFUSE_GetArrayLen_MP_8822B_MSDIO(), i = 0;
 
 	for (i = 0; i < len; ++i)
 		Array[i] = Array_MP_8822B_MSDIO[i];
 }
 
-BOOLEAN EFUSE_IsAddressMasked_MP_8822B_MSDIO(u16 Offset)
+BOOLEAN EFUSE_IsAddressMasked_MP_8822B_MSDIO(u2Byte  Offset)
 {
 	int r = Offset / 16;
 	int c = (Offset % 16) / 2;

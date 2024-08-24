@@ -14,13 +14,10 @@
  *****************************************************************************/
 #define _RTW_BR_EXT_C_
 
-#include <linux/version.h>
 #ifdef __KERNEL__
 	#include <linux/if_arp.h>
 	#include <net/ip.h>
-	#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 15, 0))
-		#include <net/ipx.h>
-	#endif
+	#include <net/ipx.h>
 	#include <linux/atalk.h>
 	#include <linux/udp.h>
 	#include <linux/if_pppox.h>
@@ -172,7 +169,6 @@ static __inline__ void __nat25_generate_ipv4_network_addr(unsigned char *network
 }
 
 
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 15, 0))
 static __inline__ void __nat25_generate_ipx_network_addr_with_node(unsigned char *networkAddr,
 		unsigned int *ipxNetAddr, unsigned char *ipxNodeAddr)
 {
@@ -204,7 +200,6 @@ static __inline__ void __nat25_generate_apple_network_addr(unsigned char *networ
 	memcpy(networkAddr + 1, (unsigned char *)network, 2);
 	networkAddr[3] = *node;
 }
-#endif
 
 
 static __inline__ void __nat25_generate_pppoe_network_addr(unsigned char *networkAddr,
@@ -897,7 +892,6 @@ int nat25_db_handle(_adapter *priv, struct sk_buff *skb, int method)
 	/*---------------------------------------------------*/
 	/*         Handle IPX and Apple Talk frame          */
 	/*---------------------------------------------------*/
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(5, 15, 0))
 	else if ((protocol == __constant_htons(ETH_P_IPX)) ||
 		 (protocol == __constant_htons(ETH_P_ATALK)) ||
 		 (protocol == __constant_htons(ETH_P_AARP))) {
@@ -1115,7 +1109,6 @@ int nat25_db_handle(_adapter *priv, struct sk_buff *skb, int method)
 
 		return -1;
 	}
-#endif
 
 	/*---------------------------------------------------*/
 	/*                Handle PPPoE frame                */

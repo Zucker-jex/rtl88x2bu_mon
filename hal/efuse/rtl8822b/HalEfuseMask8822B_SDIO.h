@@ -20,8 +20,8 @@
 ******************************************************************************/
 
 
-u16 EFUSE_GetArrayLen_MP_8822B_MSDIO(void);
+u2Byte EFUSE_GetArrayLen_MP_8822B_MSDIO(VOID);
 
-void EFUSE_GetMaskArray_MP_8822B_MSDIO(u8 *Array);
+VOID EFUSE_GetMaskArray_MP_8822B_MSDIO(pu1Byte Array);
 
-BOOLEAN EFUSE_IsAddressMasked_MP_8822B_MSDIO(u16 Offset);
+BOOLEAN EFUSE_IsAddressMasked_MP_8822B_MSDIO(u2Byte  Offset);

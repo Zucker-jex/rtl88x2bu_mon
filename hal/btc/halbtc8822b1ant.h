@@ -78,8 +78,6 @@ enum bt_info_src_8822b_1ant {
 	BT_8822B_1ANT_INFO_SRC_WIFI_FW	= 0x0,
 	BT_8822B_1ANT_INFO_SRC_BT_RSP	= 0x1,
 	BT_8822B_1ANT_INFO_SRC_BT_ACT	= 0x2,
-	BT_8822B_1ANT_INFO_SRC_BT_IQK	= 0x3,
-	BT_8822B_1ANT_INFO_SRC_BT_SCBD	= 0x4,
 	BT_8822B_1ANT_INFO_SRC_MAX
 };
 
@@ -170,9 +168,7 @@ enum bt_8822b_1ant_scoreboard {
 	BT_8822B_1ANT_SCBD_RXGAIN		= BIT(4),
 	BT_8822B_1ANT_SCBD_WLBUSY		= BIT(6),
 	BT_8822B_1ANT_SCBD_EXTFEM		= BIT(8),
-	BT_8822B_1ANT_SCBD_TDMA			= BIT(9),
-	BT_8822B_1ANT_SCBD_CQDDR		= BIT(10),
-	BT_8822B_1ANT_SCBD_ALL			= 0xffff
+	BT_8822B_1ANT_SCBD_CQDDR		= BIT(10)
 };
 
 enum bt_8822b_1ant_RUNREASON {
@@ -256,7 +252,6 @@ struct coex_sta_8822b_1ant {
 	boolean hid_exist;
 	boolean pan_exist;
 	boolean msft_mr_exist;
-	boolean bt_a2dp_active;
 	u8	num_of_profile;
 
 	boolean under_lps;
@@ -314,7 +309,7 @@ struct coex_sta_8822b_1ant {
 	u8	isolation_btween_wb; /* 0~ 50 */
 
 	u8	a2dp_bit_pool;
-	u8	kt_ver;
+	u8	cut_version;
 	boolean acl_busy;
 	boolean bt_create_connection;
 
@@ -329,8 +324,6 @@ struct coex_sta_8822b_1ant {
 
 	boolean is_A2DP_3M;
 	boolean voice_over_HOGP;
-	boolean bt_418_hid_exist;
-	boolean bt_ble_hid_exist;
 	u8	forbidden_slot;
 	u8	hid_busy_num;
 	u8	hid_pair_cnt;
@@ -341,7 +334,6 @@ struct coex_sta_8822b_1ant {
 	u32	cnt_ign_wlan_act;
 	u32	cnt_page;
 	u32	cnt_role_switch;
-	u32	cnt_wl_fw_notify;
 
 	u16	bt_reg_vendor_ac;
 	u16	bt_reg_vendor_ae;
@@ -352,9 +344,12 @@ struct coex_sta_8822b_1ant {
 	u8	bt_afh_map[10];
 	u8	bt_relink_downcount;
 	boolean is_tdma_btautoslot;
+	boolean is_tdma_btautoslot_hang;
 
 	u8	switch_band_notify_to;
+	boolean is_rf_state_off;
 
+	boolean is_hid_low_pri_tx_overhead;
 	boolean is_bt_multi_link;
 	boolean is_bt_a2dp_sink;
 
@@ -369,13 +364,10 @@ struct coex_sta_8822b_1ant {
 	u8	wl_tx_macid;
 	u8	wl_tx_retry_ratio;
 
-	boolean is_2g_freerun;
-
 	u16	score_board_WB;
 	boolean is_hid_rcu;
 	u8	bt_a2dp_vendor_id;
 	u32	bt_a2dp_device_name;
-	u32	bt_a2dp_flush_time;
 	boolean is_ble_scan_en;
 
 	boolean is_bt_opp_exist;
@@ -402,10 +394,6 @@ struct coex_sta_8822b_1ant {
 	boolean	wl_rxagg_limit_en;
 	u8	wl_rxagg_size;
 	u8	coex_run_reason;
-
-	u8	tdma_timer_base;
-	boolean wl_slot_toggle;
-	boolean wl_slot_toggle_change; /* if toggle to no-toggle */
 };
 
 struct rfe_type_8822b_1ant {
@@ -422,7 +410,6 @@ struct wifi_link_info_8822b_1ant {
 	boolean is_all_under_5g;
 	boolean is_mcc_25g;
 	boolean is_p2p_connected;
-	boolean is_connected;
 };
 
 /* *******************************************

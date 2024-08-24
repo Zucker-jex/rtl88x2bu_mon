@@ -23,9 +23,11 @@
  *
  *****************************************************************************/
 
-/*Image2HeaderVersion: R3 1.5.10*/
+/*Image2HeaderVersion: R3 1.4.5*/
 #include "mp_precomp.h"
 #include "../phydm_precomp.h"
+
+#define D_S_SIZE DELTA_SWINGIDX_SIZE
 
 #if (RTL8822B_SUPPORT == 1)
 static boolean
@@ -104,6 +106,14 @@ check_positive(struct dm_struct *dm,
 		return false;
 }
 
+static boolean
+check_negative(struct dm_struct *dm,
+	       const u32	condition1,
+	       const u32	condition2
+)
+{
+	return true;
+}
 
 /******************************************************************************
  *                           mac_reg.TXT
@@ -301,7 +311,7 @@ odm_read_and_config_mp_8822b_mac_reg(struct dm_struct *dm)
 u32
 odm_get_version_mp_8822b_mac_reg(void)
 {
-		return 117;
+		return 112;
 }
 
 #endif /* end of HWIMG_SUPPORT*/

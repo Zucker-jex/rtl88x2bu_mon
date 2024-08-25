@@ -18,23 +18,25 @@ sudo modprobe 88x2bu
 # Enable Monitor Mode
 
 ```
-sudo ip link set wlan0 down
-sudo iwconfig wlan0 mode monitor
-sudo ip link set wlan0 up
+sudo ip link set wlanN down
+sudo iwconfig wlanN mode monitor
+sudo ip link set wlanN up
 ```
 
 # Confirm Monitor Mode
 
-```
-sudo iwconfig wlan0
+***COMFAST CF-812AC(wlan1)***
 
-wlan0     unassociated  Nickname:"<WIFI@REALTEK>"
-          Mode:Monitor  Frequency=2.462 GHz  Access Point: Not-Associated
+```
+sudo iwconfig wlan1
+
+wlan1     unassociated  Nickname:"<WIFI@REALTEK>"
+          Mode:Managed  Frequency=2.412 GHz  Access Point: Not-Associated
           Sensitivity:0/0
           Retry:off   RTS thr:off   Fragment thr:off
           Encryption key:off
           Power Management:off
-          Link Quality=0/100  Signal level=0 dBm  Noise level=0 dBm
+          Link Quality:0  Signal level:0  Noise level:0
           Rx invalid nwid:0  Rx invalid crypt:0  Rx invalid frag:0
           Tx excessive retries:0  Invalid misc:0   Missed beacon:0
 ```
@@ -42,14 +44,12 @@ wlan0     unassociated  Nickname:"<WIFI@REALTEK>"
 ```
 sudo iw list
 
-Wiphy phy2
+Wiphy phy1
+        wiphy index: 1
         max # scan SSIDs: 9
         max scan IEs length: 2304 bytes
         max # sched scan SSIDs: 0
         max # match sets: 0
-        max # scan plans: 1
-        max scan plan interval: -1
-        max scan plan iterations: 0
         Retry short limit: 7
         Retry long limit: 4
         Coverage class: 0 (up to 0m)
@@ -58,13 +58,14 @@ Wiphy phy2
                 * WEP104 (00-0f-ac:5)
                 * TKIP (00-0f-ac:2)
                 * CCMP-128 (00-0f-ac:4)
-                * CMAC (00-0f-ac:6)
         Available Antennas: TX 0 RX 0
         Supported interface modes:
                  * IBSS
                  * managed
                  * AP
                  * monitor
+                 * P2P-client
+                 * P2P-GO
         Band 1:
                 Capabilities: 0x1963
                         RX LDPC
@@ -93,20 +94,20 @@ Wiphy phy2
                         * 48.0 Mbps
                         * 54.0 Mbps
                 Frequencies:
-                        * 2412 MHz [1] (20.0 dBm)
-                        * 2417 MHz [2] (20.0 dBm)
-                        * 2422 MHz [3] (20.0 dBm)
-                        * 2427 MHz [4] (20.0 dBm)
-                        * 2432 MHz [5] (20.0 dBm)
-                        * 2437 MHz [6] (20.0 dBm)
-                        * 2442 MHz [7] (20.0 dBm)
-                        * 2447 MHz [8] (20.0 dBm)
-                        * 2452 MHz [9] (20.0 dBm)
-                        * 2457 MHz [10] (20.0 dBm)
-                        * 2462 MHz [11] (20.0 dBm)
-                        * 2467 MHz [12] (20.0 dBm) (no IR)
-                        * 2472 MHz [13] (20.0 dBm)
-                        * 2484 MHz [14] (disabled)
+                        * 2412.0 MHz [1] (20.0 dBm)
+                        * 2417.0 MHz [2] (20.0 dBm)
+                        * 2422.0 MHz [3] (20.0 dBm)
+                        * 2427.0 MHz [4] (20.0 dBm)
+                        * 2432.0 MHz [5] (20.0 dBm)
+                        * 2437.0 MHz [6] (20.0 dBm)
+                        * 2442.0 MHz [7] (20.0 dBm)
+                        * 2447.0 MHz [8] (20.0 dBm)
+                        * 2452.0 MHz [9] (20.0 dBm)
+                        * 2457.0 MHz [10] (20.0 dBm)
+                        * 2462.0 MHz [11] (20.0 dBm)
+                        * 2467.0 MHz [12] (20.0 dBm) (no IR)
+                        * 2472.0 MHz [13] (20.0 dBm)
+                        * 2484.0 MHz [14] (disabled)
         Band 2:
                 Capabilities: 0x1863
                         RX LDPC
@@ -150,6 +151,7 @@ Wiphy phy2
                         7 streams: not supported
                         8 streams: not supported
                 VHT TX highest supported: 867 Mbps
+                VHT extended NSS: not supported
                 Bitrates (non-HT):
                         * 6.0 Mbps
                         * 9.0 Mbps
@@ -160,34 +162,34 @@ Wiphy phy2
                         * 48.0 Mbps
                         * 54.0 Mbps
                 Frequencies:
-                        * 5180 MHz [36] (30.0 dBm)
-                        * 5200 MHz [40] (30.0 dBm)
-                        * 5220 MHz [44] (30.0 dBm)
-                        * 5240 MHz [48] (30.0 dBm)
-                        * 5260 MHz [52] (30.0 dBm) (no IR, radar detection)
-                        * 5280 MHz [56] (30.0 dBm) (no IR, radar detection)
-                        * 5300 MHz [60] (30.0 dBm) (no IR, radar detection)
-                        * 5320 MHz [64] (30.0 dBm) (no IR, radar detection)
-                        * 5500 MHz [100] (30.0 dBm) (no IR, radar detection)
-                        * 5520 MHz [104] (30.0 dBm) (no IR, radar detection)
-                        * 5540 MHz [108] (30.0 dBm) (no IR, radar detection)
-                        * 5560 MHz [112] (30.0 dBm) (no IR, radar detection)
-                        * 5580 MHz [116] (30.0 dBm) (no IR, radar detection)
-                        * 5600 MHz [120] (30.0 dBm) (no IR, radar detection)
-                        * 5620 MHz [124] (30.0 dBm) (no IR, radar detection)
-                        * 5640 MHz [128] (30.0 dBm) (no IR, radar detection)
-                        * 5660 MHz [132] (30.0 dBm) (no IR, radar detection)
-                        * 5680 MHz [136] (30.0 dBm) (no IR, radar detection)
-                        * 5700 MHz [140] (30.0 dBm) (no IR, radar detection)
-                        * 5720 MHz [144] (disabled)
-                        * 5745 MHz [149] (disabled)
-                        * 5765 MHz [153] (disabled)
-                        * 5785 MHz [157] (disabled)
-                        * 5805 MHz [161] (disabled)
-                        * 5825 MHz [165] (disabled)
-                        * 5845 MHz [169] (disabled)
-                        * 5865 MHz [173] (disabled)
-                        * 5885 MHz [177] (disabled)
+                        * 5180.0 MHz [36] (30.0 dBm)
+                        * 5200.0 MHz [40] (30.0 dBm)
+                        * 5220.0 MHz [44] (30.0 dBm)
+                        * 5240.0 MHz [48] (30.0 dBm)
+                        * 5260.0 MHz [52] (30.0 dBm) (no IR, radar detection)
+                        * 5280.0 MHz [56] (30.0 dBm) (no IR, radar detection)
+                        * 5300.0 MHz [60] (30.0 dBm) (no IR, radar detection)
+                        * 5320.0 MHz [64] (30.0 dBm) (no IR, radar detection)
+                        * 5500.0 MHz [100] (30.0 dBm) (no IR, radar detection)
+                        * 5520.0 MHz [104] (30.0 dBm) (no IR, radar detection)
+                        * 5540.0 MHz [108] (30.0 dBm) (no IR, radar detection)
+                        * 5560.0 MHz [112] (30.0 dBm) (no IR, radar detection)
+                        * 5580.0 MHz [116] (30.0 dBm) (no IR, radar detection)
+                        * 5600.0 MHz [120] (30.0 dBm) (no IR, radar detection)
+                        * 5620.0 MHz [124] (30.0 dBm) (no IR, radar detection)
+                        * 5640.0 MHz [128] (30.0 dBm) (no IR, radar detection)
+                        * 5660.0 MHz [132] (30.0 dBm) (no IR, radar detection)
+                        * 5680.0 MHz [136] (30.0 dBm) (no IR, radar detection)
+                        * 5700.0 MHz [140] (30.0 dBm) (no IR, radar detection)
+                        * 5720.0 MHz [144] (disabled)
+                        * 5745.0 MHz [149] (30.0 dBm)
+                        * 5765.0 MHz [153] (30.0 dBm)
+                        * 5785.0 MHz [157] (30.0 dBm)
+                        * 5805.0 MHz [161] (30.0 dBm)
+                        * 5825.0 MHz [165] (30.0 dBm)
+                        * 5845.0 MHz [169] (disabled)
+                        * 5865.0 MHz [173] (disabled)
+                        * 5885.0 MHz [177] (disabled)
         Supported commands:
                  * new_interface
                  * set_interface
@@ -201,9 +203,19 @@ Wiphy phy2
                  * flush_pmksa
                  * remain_on_channel
                  * frame
+                 * set_wiphy_netns
                  * set_channel
                  * connect
                  * disconnect
+        WoWLAN support:
+                 * wake up on anything (device continues operating normally)
+        software interface modes (can always be added):
+                 * monitor
+        interface combinations are not supported
+        Device supports scan flush.
+        max # scan plans: 1
+        max scan plan interval: -1
+        max scan plan iterations: 0
         Supported TX frame types:
                  * IBSS: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
                  * managed: 0x00 0x10 0x20 0x30 0x40 0x50 0x60 0x70 0x80 0x90 0xa0 0xb0 0xc0 0xd0 0xe0 0xf0
@@ -218,11 +230,8 @@ Wiphy phy2
                  * AP/VLAN: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0
                  * P2P-client: 0x40 0xd0
                  * P2P-GO: 0x00 0x20 0x40 0xa0 0xb0 0xc0 0xd0
-        WoWLAN support:
-                 * wake up on anything (device continues operating normally)
-        software interface modes (can always be added):
-                 * monitor
-        interface combinations are not supported
-        Device supports scan flush.
         Supported extended features:
+
 ```
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FZucker-jex%2Frtl88x2bu_mon.svg?type=large&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2FZucker-jex%2Frtl88x2bu_mon?ref=badge_large&issueType=license)

@@ -1,4 +1,6 @@
 # Description
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FZucker-jex%2Frtl88x2bu_mon.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FZucker-jex%2Frtl88x2bu_mon?ref=badge_shield)
+
 
 Enable monitor mode from original rtl88x2bu driver. 
 
@@ -226,3 +228,6 @@ Wiphy phy2
         Device supports scan flush.
         Supported extended features:
 ````
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FZucker-jex%2Frtl88x2bu_mon.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FZucker-jex%2Frtl88x2bu_mon?ref=badge_large)
